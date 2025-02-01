@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💘</title>
+    <style>
+        /* Reset some basic elements for a clean slate */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff4e50, #fc913a, #f9d423);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .yes {
+            background-color: #ff0055;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.7);
+        }
+
+        .yes:hover {
+            background-color: #d81b60;
+            transform: scale(1.1);
+        }
+
+        .maybe {
+            background-color: #ffd700;
+            color: black;
+        }
+
+        .maybe:hover {
+            background-color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        .no {
+            background-color: #ffffff;
+            color: #ff4081;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .floating-hearts, .floating-butterflies {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart-emoji, .butterfly {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: floatUp 4s infinite ease-in-out;
+        }
+
+        .heart-emoji {
+            color: red;
+        }
+
+        .butterfly {
+            color: #ffccff;
+            font-size: 3rem;
+            transform: rotate(20deg);
+            animation: fly 4s infinite ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0) rotate(20deg); }
+            50% { transform: translateY(-20px) rotate(-20deg); }
+            100% { transform: translateY(0) rotate(20deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine, Kuchu Puchu? ❤️</h1>
+        <div class="buttons">
+            <button class="yes" onclick="handleResponse('yes')">Yes</button>
+            <button class="maybe" onclick="handleResponse('maybe')">Maybe 🤔</button>
+            <button class="no" id="noButton">No</button>
+        </div>
+        <div class="floating-hearts" id="hearts"></div>
+        <div class="floating-butterflies" id="butterflies"></div>
+        <audio id="loveSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+    </div>
+
+    <script>
+        const noButton = document.getElementById("noButton");
+        const heartsContainer = document.getElementById("hearts");
+        const butterfliesContainer = document.getElementById("butterflies");
+        const loveSound = document.getElementById("loveSound");
+
+        // Prevents the 'No' button from staying in one place
+        noButton.addEventListener("mouseover", moveButton);
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        }
+
+        // Handles responses
+        function handleResponse(response) {
+            switch (response) {
+                case 'yes':
+                    handleYes();
+                    break;
+                case 'maybe':
+                    handleMaybe();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function handleYes() {
+            alert('Yay! You made my day, Kuchu Puchu! ❤️');
+            loveSound.play();
+            generateFloatingElements();
+        }
+
+        function handleMaybe() {
+            alert('Hmm... Think about it, Kuchu Puchu! 😘');
+        }
+
+        function generateFloatingElements() {
+            for (let i = 0; i < 15; i++) {
+                createHeart();
+                createButterfly();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart-emoji");
+            heart.innerHTML = "❤️";
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${2 + Math.random() * 3}s`;
+            heartsContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        function createButterfly() {
+            const butterfly = document.createElement("div");
+            butterfly.classList.add("butterfly");
+            butterfly.innerHTML = "🦋";
+            butterfly.style.left = `${Math.random() * 100}%`;
+            butterfly.style.animationDuration = `${2 + Math.random() * 3}s`;
+            butterfliesContainer.appendChild(butterfly);
+            setTimeout(() => butterfly.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
